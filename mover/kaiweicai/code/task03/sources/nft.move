@@ -115,6 +115,12 @@ module task03::sample_nft_tests {
             assert!(*string::bytes(sample_nft::description(&nft)) == b"a new description", 0);
             ts::return_to_sender(&scenario, nft);
         };
+        ts::next_tx(&mut scenario,addr2);
+        {
+            let mut nft = ts::take_from_sender<SampleNFT>(&scenario);
+            assert!(*string::bytes(sample_nft::description(&nft)) == b"a new description", 0);
+            ts::return_to_sender(&scenario, nft);
+        };
         // burn it
         ts::next_tx(&mut scenario, addr2);
         {

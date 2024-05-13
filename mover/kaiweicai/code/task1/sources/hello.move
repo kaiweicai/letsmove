@@ -1,8 +1,7 @@
 module hello::hello {
-    use sui::object::{Self,UID};
-    use std::ascii::{Self,String,string};
-    use sui::transfer::{Self,transfer};
-    use sui::tx_context::{TxContext,sender};
+    use std::string::{String,utf8};
+    use sui::transfer::{transfer};
+    use sui::tx_context::{sender};
 
     public struct Hello has key,store{
         id:UID,
@@ -10,10 +9,10 @@ module hello::hello {
     }
 
     fun init(ctx: &mut tx_context::TxContext) {
-        let hello_move = Hello{
+        let kaiweicai_move = Hello{
             id:object::new(ctx),
-            say:string(b"move"),
+            say:utf8(b"kaiweicai"),
         };
-        transfer(hello_move,sender(ctx));
+        transfer(kaiweicai_move,sender(ctx));
     }
 }

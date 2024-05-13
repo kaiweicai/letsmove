@@ -1,5 +1,5 @@
 module task02::mycoin {
-    use sui::coin::{Self, TreasuryCap};
+    use sui::coin::{Self, TreasuryCap,Coin};
 
     public struct MYCOIN has drop {}
 
@@ -15,7 +15,16 @@ module task02::mycoin {
         recipient: address, 
         ctx: &mut TxContext,
     ) {
-        let coin = coin::mint(treasury_cap, amount, ctx);
-        transfer::public_transfer(coin, recipient)
+        coin::mint_and_transfer(treasury_cap,amount,recipient,ctx)
+    }
+
+    public fun burn(treasure_cap:&mut TreasuryCap<MYCOIN>,coin:Coin<MYCOIN>){
+        coin::burn(treasure_cap,coin);
+    }
+
+    #[test_only]
+    /// Wrapper of module initializer for testing
+    public fun test_init(ctx:&mut TxContext){
+        init(MYCOIN{},ctx)
     }
 }
